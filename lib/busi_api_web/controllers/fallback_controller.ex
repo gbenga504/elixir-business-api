@@ -21,4 +21,11 @@ defmodule BusiApiWeb.FallbackController do
     |> put_view(BusiApiWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(BusiApiWeb.ErrorView)
+    |> render(:"401")
+  end
 end

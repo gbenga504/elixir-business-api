@@ -11,8 +11,19 @@
 # and so on) as they will fail if something goes wrong.
 alias BusiApi.Directory
 alias BusiApi.Directory.Business
+alias BusiApi.Accounts
+alias BusiApi.Accounts.User
 
+# create the categories
 business_names = ~w{Konga Jumia Zappos}
+
 for business_name <- business_names do
-  Directory.create_business(%Business{name: business_name, tag: "e-commerce", description: "Just another ecommerce store"})
+  Directory.create_business!(%Business{
+    name: business_name,
+    tag: "e-commerce",
+    description: "Just another ecommerce store"
+  })
 end
+
+# create a super admin
+Accounts.create_user!(%{email: "superadmin@business.com", password: "Password123"})

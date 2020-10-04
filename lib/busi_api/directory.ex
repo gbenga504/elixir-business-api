@@ -49,14 +49,16 @@ defmodule BusiApi.Directory do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_business(%Business{} = business) do
+  def create_business!(business = %Business{}) do
     Repo.insert!(business)
   end
-  def create_business(%{} = attrs) do
+
+  def create_business(attrs = %{}) do
     %Business{}
     |> Business.changeset(attrs)
     |> Repo.insert()
   end
+
   @doc """
   Updates a business.
 

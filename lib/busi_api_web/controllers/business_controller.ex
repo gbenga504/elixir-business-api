@@ -21,6 +21,7 @@ defmodule BusiApiWeb.BusinessController do
   end
 
   def show(conn, %{"id" => id}) do
+    #Guradian.Plug.current_resource(conn) gives us the current user
     business = Directory.get_business!(id)
     render(conn, "show.json", business: business)
   end
