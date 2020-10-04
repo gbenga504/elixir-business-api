@@ -11,7 +11,7 @@ defmodule BusiApiWeb.BusinessController do
     render(conn, "index.json", businesses: businesses)
   end
 
-  def create(conn, %{"business" => business_params}) do
+  def create(conn, business_params) do
     with {:ok, %Business{} = business} <- Directory.create_business(business_params) do
       conn
       |> put_status(:created)
@@ -25,8 +25,8 @@ defmodule BusiApiWeb.BusinessController do
     render(conn, "show.json", business: business)
   end
 
-  def update(conn, %{"id" => id, "business" => business_params}) do
-    business = Directory.get_business!(id)
+  def update(conn, business_params) do
+    business = Directory.get_business!(business_params["id"])
 
     with {:ok, %Business{} = business} <- Directory.update_business(business, business_params) do
       render(conn, "show.json", business: business)
