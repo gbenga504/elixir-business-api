@@ -9,7 +9,7 @@ defmodule BusiApiWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params),
-         {:ok, user, token} <- Guardian.create_token(user) do
+         token <- Guardian.login(conn, user) do
       conn
       |> put_status(:created)
       |> render("user.json", %{user: user, token: token})

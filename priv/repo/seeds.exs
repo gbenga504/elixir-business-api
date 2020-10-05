@@ -12,7 +12,6 @@
 alias BusiApi.Directory
 alias BusiApi.Directory.Business
 alias BusiApi.Accounts
-alias BusiApi.Accounts.User
 
 # create the categories
 business_names = ~w{Konga Jumia Zappos}

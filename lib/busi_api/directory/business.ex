@@ -2,6 +2,8 @@ defmodule BusiApi.Directory.Business do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
+
   schema "businesses" do
     field :description, :string
     field :name, :string
