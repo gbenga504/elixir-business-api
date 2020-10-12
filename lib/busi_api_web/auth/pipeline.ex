@@ -5,6 +5,7 @@ defmodule BusiApiWeb.Auth.Pipeline do
     error_handler: BusiApiWeb.Auth.ErrorHandler
 
   plug Guardian.Plug.VerifyHeader
+  plug Guardian.Plug.SlidingCookie
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource
 end

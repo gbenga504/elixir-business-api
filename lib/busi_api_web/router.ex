@@ -1,5 +1,6 @@
 defmodule BusiApiWeb.Router do
   use BusiApiWeb, :router
+  import BusiApiWeb.Auth.Plug, only: [verify_cookie_refresh_token: 2]
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -11,12 +12,15 @@ defmodule BusiApiWeb.Router do
 
   pipeline :auth do
     plug BusiApiWeb.Auth.Pipeline
+    plug BusiApiWeb.Auth.Plug
+    plug :verify_cookie_refresh_token
   end
 
   scope "/api", BusiApiWeb do
     pipe_through :api
     post "/users/signup", UserController, :create
     post "/users/login", SessionController, :create
+    put "/users/refresh", SessionController, :update
     delete "/users/logout", SessionController, :delete
   end
 

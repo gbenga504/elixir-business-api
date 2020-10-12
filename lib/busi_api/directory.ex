@@ -53,9 +53,10 @@ defmodule BusiApi.Directory do
     Repo.insert!(business)
   end
 
-  def create_business(attrs = %{}) do
+  def create_business(user = %BusiApi.Accounts.User{}, attrs = %{}) do
     %Business{}
     |> Business.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 
@@ -104,5 +105,15 @@ defmodule BusiApi.Directory do
   """
   def change_business(%Business{} = business, attrs \\ %{}) do
     Business.changeset(business, attrs)
+  end
+
+  def get_user_businesses(user_id) do
+    Business
+    |> user_businesses_query(user_id)
+    |> Repo.all()
+  end
+
+  def user_businesses_query(query, user_id) do
+    from business in query, where: business.user_id == ^user_id
   end
 end

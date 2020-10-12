@@ -3,11 +3,13 @@ defmodule BusiApi.Directory.Business do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+  @foreign_key_type Ecto.UUID
 
   schema "businesses" do
     field :description, :string
     field :name, :string
     field :tag, :string
+    belongs_to :user, BusiApi.Accounts.User
 
     timestamps()
   end
