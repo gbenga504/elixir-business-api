@@ -107,10 +107,10 @@ defmodule BusiApi.Directory do
     Business.changeset(business, attrs)
   end
 
-  def get_user_businesses(user_id) do
+  def get_user_businesses(user_id, params) do
     Business
     |> user_businesses_query(user_id)
-    |> Repo.all()
+    |> BusiApi.Pagination.paginate(params)
   end
 
   def user_businesses_query(query, user_id) do

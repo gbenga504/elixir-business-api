@@ -3,7 +3,13 @@ defmodule BusiApiWeb.BusinessView do
   alias BusiApiWeb.BusinessView
 
   def render("index.json", %{businesses: businesses}) do
-    %{data: render_many(businesses, BusinessView, "business.json")}
+    %{
+      total: businesses.total,
+      total_pages: businesses.total_pages,
+      page: businesses.page,
+      page_size: businesses.page_size,
+      data: render_many(businesses.entries, BusinessView, "business.json")
+    }
   end
 
   def render("show.json", %{business: business}) do

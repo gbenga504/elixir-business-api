@@ -6,8 +6,8 @@ defmodule BusiApiWeb.BusinessController do
 
   action_fallback BusiApiWeb.FallbackController
 
-  def index(conn, _params, _current_user) do
-    businesses = Directory.list_businesses()
+  def index(conn, params, current_user) do
+    businesses = Directory.get_user_businesses(current_user.id, params)
     render(conn, "index.json", businesses: businesses)
   end
 

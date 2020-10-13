@@ -26,3 +26,4 @@ end
 
 # create a super admin
 Accounts.create_user!(%{email: "superadmin@business.com", password: "Password123"})
+Accounts.create_user!(%{email: "superadmin2@business.com", password: "Password123"})
