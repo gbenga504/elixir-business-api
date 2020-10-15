@@ -45,7 +45,8 @@ defmodule BusiApi.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:pbkdf2_elixir, "~> 1.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 
