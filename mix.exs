@@ -46,7 +46,9 @@ defmodule BusiApi.MixProject do
       {:guardian, "~> 2.0"},
       {:pbkdf2_elixir, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+      {:arc, "~> 0.11.0"},
+      {:arc_ecto, "~> 0.11.3"}
     ]
   end
 

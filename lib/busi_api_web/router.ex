@@ -27,6 +27,8 @@ defmodule BusiApiWeb.Router do
   scope "/api", BusiApiWeb do
     pipe_through [:api, :auth]
     resources "/businesses", BusinessController, except: [:new, :edit]
+    patch "/users/avatar", UserController, :update_avatar
+    delete "users/avatar", UserController, :delete_avatar
   end
 
   scope "/", BusiApiWeb do

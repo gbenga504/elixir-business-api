@@ -119,6 +119,12 @@ defmodule BusiApi.Accounts do
     User.changeset(user, attrs)
   end
 
+  def update_user_avatar(%User{} = user, attrs) do
+    user
+    |> User.avatar_changeset(attrs)
+    |> Repo.update()
+  end
+
   def authenticate_by_email_and_password(email, password) do
     {:ok, user} = get_user_by(email: email)
 

@@ -1,5 +1,6 @@
 defmodule BusiApi.Accounts.User do
   use Ecto.Schema
+  use Arc.Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
@@ -8,6 +9,7 @@ defmodule BusiApi.Accounts.User do
     field :email, :string
     field :encrypted_password, :string
     field :password, :string, virtual: true
+    field :avatar, BusiApi.MediaUploader.Type
 
     timestamps()
   end
@@ -23,7 +25,20 @@ defmodule BusiApi.Accounts.User do
     |> put_pass_hash()
   end
 
-  def put_pass_hash(changeset) do
+  def avatar_changeset(user, %{"avatar" => nil}) do
+    attrs = %{"avatar" => nil}
+    user
+    |> cast(attrs, [:avatar])
+  end
+
+  def avatar_changeset(user, attrs) do
+    user
+    |> cast(attrs, [])
+    |> cast_attachments(attrs, [:avatar])
+    |> validate_required([:avatar])
+  end
+
+  defp put_pass_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
         put_change(changeset, :encrypted_password, Pbkdf2.hash_pwd_salt(pass))
