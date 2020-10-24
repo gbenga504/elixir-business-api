@@ -9,6 +9,8 @@ defmodule BusiApi.Accounts.User do
     field :email, :string
     field :encrypted_password, :string
     field :password, :string, virtual: true
+    field :password_reset_token, :string
+    field :password_reset_sent_at, :naive_datetime
     field :avatar, BusiApi.MediaUploader.Type
 
     timestamps()
@@ -17,16 +19,25 @@ defmodule BusiApi.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :password_reset_token, :password_reset_sent_at])
     |> validate_required([:email, :password])
     |> validate_format(:email, ~r/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
     |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
     |> put_pass_hash()
   end
 
+  # This extra changeset is not needed if we update_change(changeset, :password, new_value)
+  # but since we use password as a virtual field in the DB then it is necessary we do this
+  def password_reset_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:password_reset_token, :password_reset_sent_at])
+  end
+
   def avatar_changeset(user, %{"avatar" => nil}) do
     attrs = %{"avatar" => nil}
+
     user
     |> cast(attrs, [:avatar])
   end

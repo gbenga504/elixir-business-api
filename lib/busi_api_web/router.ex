@@ -22,6 +22,8 @@ defmodule BusiApiWeb.Router do
     post "/users/login", SessionController, :create
     put "/users/refresh", SessionController, :update
     delete "/users/logout", SessionController, :delete
+    post "/users/forgot-password", PasswordResetController, :create
+    patch "/users/reset-password", PasswordResetController, :update
   end
 
   scope "/api", BusiApiWeb do

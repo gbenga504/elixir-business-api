@@ -48,7 +48,9 @@ defmodule BusiApi.MixProject do
       {:poison, "~> 3.1"},
       {:cors_plug, "~> 2.0"},
       {:arc, "~> 0.11.0"},
-      {:arc_ecto, "~> 0.11.3"}
+      {:arc_ecto, "~> 0.11.3"},
+      {:secure_random, "~> 0.5"},
+      {:bamboo, "~> 1.6"}
     ]
   end
 

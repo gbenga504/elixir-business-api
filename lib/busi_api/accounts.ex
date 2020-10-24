@@ -90,6 +90,12 @@ defmodule BusiApi.Accounts do
     |> Repo.update()
   end
 
+  def update_user!(%User{} = user, attrs) do
+    user
+    |> User.changeset(attrs)
+    |> Repo.update!()
+  end
+
   @doc """
   Deletes a user.
 
@@ -125,6 +131,12 @@ defmodule BusiApi.Accounts do
     |> Repo.update()
   end
 
+  def update_password_reset_token!(user = %User{}, attrs) do
+    user
+    |> User.password_reset_changeset(attrs)
+    |> Repo.update!()
+  end
+
   def authenticate_by_email_and_password(email, password) do
     {:ok, user} = get_user_by(email: email)
 
@@ -138,6 +150,18 @@ defmodule BusiApi.Accounts do
       true ->
         Pbkdf2.no_user_verify()
         {:error, :not_found}
+    end
+  end
+
+  def valid_password_reset_token?(token_sent_at) do
+    current_time = NaiveDateTime.utc_now()
+
+    case Time.diff(current_time, token_sent_at) < 7200 do
+      true ->
+        {:ok, true}
+
+      false ->
+        {:error, :bad_request}
     end
   end
 end

@@ -12,4 +12,12 @@ defmodule BusiApiWeb.UserView do
   def render("avatar.json", %{avatar: avatar}) do
     %{avatar: "#{System.get_env("BASE_URL")}#{avatar}"}
   end
+
+  def render("forgot_password.json", %{}) do
+    %{status: true, message: "Your password resend email has been sent"}
+  end
+
+  def render("reset_password.json", %{}) do
+    %{status: true, message: "Your password changed successfully"}
+  end
 end

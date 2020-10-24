@@ -22,6 +22,10 @@ config :busi_api, BusiApiWeb.Endpoint,
   check_origin: false,
   watchers: []
 
+config :busi_api, BusiApi.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  open_email_in_browser_url: "http://localhost:4000/sent_emails"
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
